@@ -1,0 +1,63 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-lb
+    ports:
+      - "${APP_PORT}:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - wordpress1
+      - wordpress2
+
+  wordpress1:
+    image: wordpress:latest
+    container_name: wp1
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        define('ADMIN_COOKIE_PATH', '/');
+        define('COOKIE_DOMAIN', '');
+        define('COOKIEPATH', '');
+        define('SITECOOKIEPATH', '');
+    volumes:
+      - wp_uploads:/var/www/html/wp-content/uploads
+    depends_on:
+      - db
+
+  wordpress2:
+    image: wordpress:latest
+    container_name: wp2
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        define('ADMIN_COOKIE_PATH', '/');
+        define('COOKIE_DOMAIN', '');
+        define('COOKIEPATH', '');
+        define('SITECOOKIEPATH', '');
+    volumes:
+      - wp_uploads:/var/www/html/wp-content/uploads
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+
+volumes:
+  wp_uploads:
+    
