@@ -1,0 +1,9 @@
+# sensitive information
+.env
+secret.key
+
+
+# log and cache
+*.log
+__pycache__/
+.cache/
