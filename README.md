@@ -1,8 +1,16 @@
-# Using Docker to set up Wordpress clusters and enhancing Nginx cybersecurity 
-
+# Using Docker and Nginx to build a WordPress environment with load balancing capabilities
 
 ## Description: 
-Hi, this is my home lab project. I'm trying to document how I build a website server from scratch. Starting from installing Linux server, docker to setting up nginx and wordpress, I'm using Docker Compose to build a wordpress environment with load balancing and also implementing transmission performance optimization and hiding server information for security through Nginx configuration file. My goal is to stimulate the enterprise environment as real as possible. Check it out!
+Hi, this is my home lab project. I'm trying to document how I build a website server from scratch. Starting from installing Linux server, docker to configuring Docker and Nginx settings, verified firewall rules, and troubleshot multiple deployment issues throughout the setup process.
+
+During implementation, resolved problems related to inconsistent server name configurations and adjusted Nginx header settings to ensure WordPress correctly detected the configured service port instead of the default port 80.
+
+After deployment, encountered persistent login issues caused by session handling across containers. The issue was successfully resolved by implementing sticky sessions, modifying Docker environment variables, and configuring shared volumes between containers.
+
+For optimization, I also adjusted Nginx configuration file to improve transmission performance and to hide the server information for security reason.  
+
+The final project configuration and troubleshooting documentation were uploaded here for knowledge sharing. My goal is to stimulate the enterprise environment as real as possible. Check it out!  
+
 
 ## Features
 - Load balancing: using ```ip_hash``` to make sure the consistency of wordpress clusters
